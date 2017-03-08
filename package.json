@@ -3,7 +3,9 @@
   "scripts": {
     "lint": "./node_modules/eslint/bin/eslint.js ."
   },
-  "dependencies": {},
+  "dependencies": {
+    "uuid": "^3.0.1"
+  },
   "devDependencies": {
     "eslint": "^3.17.1",
     "eslint-config-airbnb": "^14.1.0",
