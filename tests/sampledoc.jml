@@ -1,0 +1,31 @@
+// reserved words
+// text, style, listeners - anything else produces a child
+
+
+module.exports = {
+  header: {
+    children: [
+      { text: 'home', style: { width: '35px' } },
+      { text: 'about', style: { width: '35px' } },
+    ],
+    listeners: [
+      {
+        on: 'click',
+        do() {
+          this.footer.text = 'updated';
+        },
+      },
+    ],
+    style: { height: '50px', backgroundColor: 'blue' },
+  },
+  body: {
+    text: 'hello there how are you',
+  },
+  footer: {
+    text: this.header.children[0].text,
+    items: [
+      { text: 'yes' },
+      { text: 'here' },
+    ],
+  },
+};
