@@ -1,6 +1,7 @@
 // reserved words
-// text, style, listeners - anything else produces a child
+// text, style, listeners, jmlid - anything else produces a child
 
+let i = 0;
 
 module.exports = {
   header: {
@@ -22,7 +23,11 @@ module.exports = {
     text: 'hello there how are you',
   },
   footer: {
-    text: this.header.children[0].text,
+    // computed propety
+    get text() {
+      i += 1;
+      return i;
+    },
     items: [
       { text: 'yes' },
       { text: 'here' },
