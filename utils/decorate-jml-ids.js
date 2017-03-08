@@ -1,12 +1,18 @@
+/* eslint-disable no-param-reassign */
+
 const uuid = require('uuid').v4;
 const reservedWords = require('../lang/reserved-words');
 
 function decorateWithID(jml, salt = uuid()) {
   // decorate JML object with jmlids
-  // eslint-disable-next-line no-param-reassign
   jml.jmlid = salt;
 
   Object.keys(jml).forEach((key) => {
+    if (key === 'listeners') {
+      jml.listeners.forEach((listener) => {
+        listener.jmlid = salt;
+      });
+    }
     // ignore reserved properties
     if (reservedWords.includes(key)) {
       return;
