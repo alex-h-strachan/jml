@@ -1,10 +1,5 @@
 const Jml = require('./lang/jml');
 
-function inject(doc, query) {
-  document.querySelector(query).innerHTML = doc.render();
-}
+export default Jml;
 
-module.exports = {
-  Jml,
-  inject,
-};
+
