@@ -1,1 +1,43 @@
-<script src="../dist/jml.js"></script>
+<script src='../dist/jml.js'></script>
+<div id='app'></div>
+<script>
+  let i = 0;
+
+  let state = {
+    header: {
+      children: [
+        { text: 'home', style: { width: '35px' } },
+        { text: 'about', style: { width: '35px' } },
+      ],
+      listeners: [
+        {
+          on: 'click',
+          do() {
+            this.footer.text = 'updated';
+          },
+        },
+      ],
+      style: { height: '50px', backgroundColor: 'blue' },
+    },
+    body: {
+      text: 'hello there how are you',
+    },
+    footer: {
+      // computed propety
+      get text() {
+        i += 1;
+        return i;
+      },
+      items: [
+        { text: 'yes' },
+        { text: 'here' },
+      ],
+    },
+  };
+
+  const doc = new Jml(state, '#app', { history: true });
+
+  setInterval(() => {
+    doc.setState(state);
+  }, 1000)
+</script>

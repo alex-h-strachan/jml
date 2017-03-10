@@ -6,17 +6,25 @@ utils.translateToHtml = require('../utils/translate-to-html');
 
 
 class Jml {
-  constructor(document, query, salt = uuid()) {
+  constructor(document, query, options) {
     this.document = Object.assign({}, document);
+    this.salt = options.salt || uuid();
     this.query = query;
-    this.salt = salt;
+    this.previousRendered = '';
+
+    if (options.history) {
+      this.history = [];
+    }
+
     this.decorate();
     this.render();
   }
 
-  update(document) {
-    this.document = Object.assign({}, document);
-    // probably do some diffing instead of this...
+  setState(partial) {
+    if (this.history) {
+      this.history.push(Object.assign({}, this.document));
+    }
+    this.document = Object.assign({}, this.document, partial);
     this.decorate();
     this.render();
   }
@@ -26,15 +34,24 @@ class Jml {
   }
 
   get rendered() {
-    return utils.translateToHtml(this);
+    return utils.translateToHtml(this.document);
+  }
+
+  get diff() {
+    const updates = [];
+    // right now diffs the whole document
+    updates.push({
+      query: this.query,
+      html: this.rendered.html,
+    });
+    return updates;
   }
 
   render() {
-    const rendered = this.rendered;
-    console.log(rendered);
-    document.querySelector(this.query).innerHTML = rendered.html;
-
-    // handle the listeners
+    const updates = this.diff;
+    updates.forEach((update) => {
+      document.querySelector(update.query).innerHTML = update.html;
+    });
   }
 }
 
